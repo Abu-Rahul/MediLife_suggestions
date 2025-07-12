@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Medilife Suggestion - Sign Up</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="disease2.jpg" />
+</head>
+<body class="login-signup-bg">
+    <nav>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='index.html'" class="nav-button" aria-label="Navigate to Home">Home</button>
+            <button onclick="window.location.href='about.html'" class="nav-button" aria-label="Navigate to About Us">About Us</button>
+            <button onclick="window.location.href='services.html'" class="nav-button" aria-label="Navigate to Services">Services</button>
+            <button onclick="window.location.href='signup.html'" class="nav-button" aria-label="Navigate to Sign Up">SignUp</button>
+            <button onclick="window.location.href='login.html'" class="nav-button" aria-label="Navigate to Login">LogIn</button>
+            <button onclick="window.location.href='contact.html'" class="nav-button" aria-label="Navigate to Contact Info">Contact Info</button>
+            <button onclick="window.location.href='index.html#medicine-hall'" class="nav-button" aria-label="Navigate to Medicine Hall">Medicine Hall</button>
+        </div>
+    </nav>
+
+    <section class="page-content">
+        <h1>Sign Up Now</h1>
+        <div class="form-container">
+            <div class="form-inner">
+                <div class="form-field">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Enter your name" aria-label="Full name" required>
+                </div>
+                <div class="form-field">
+                    <label for="photoURL">Profile Picture URL (Optional)</label>
+                    <input type="url" id="photoURL" placeholder="Enter profile picture URL" aria-label="Profile picture URL">
+                </div>
+                <div class="form-field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" aria-label="Email address" required>
+                </div>
+                <div class="form-field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" aria-label="Password" required>
+                </div>
+                <button type="button" onclick="handleSignUp()" class="submit-button">Sign Up</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Take charge of your health and well-being. Medilife is here to support you every step of the way.</p>
+        <div class="auth-buttons"></div>
+    </footer>
+
+    <!-- Firebase App + Auth SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
+
+    <script>
+        // Firebase config (replace with your actual config)
+        const firebaseConfig = {
+            apiKey: "AIzaSyC7QzWu2jqCxFtY0-Arrw-yN13hmrHu8LM",
+            authDomain: "medilife-ce9a3.firebaseapp.com",
+            projectId: "medilife-ce9a3",
+            appId: "1:966824331253:web:your_real_app_id"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Handle sign up
+        function handleSignUp() {
+            const name = document.getElementById("name").value;
+            const photoURL = document.getElementById("photoURL").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    return userCredential.user.updateProfile({
+                        displayName: name,
+                        photoURL: photoURL || null
+                    });
+                })
+                .then(() => {
+                    window.location.href = "index.html";
+                })
+                .catch(error => {
+                    alert("Sign up failed: " + error.message);
+                });
+        }
+
+        // Monitor user login state
+        auth.onAuthStateChanged((user) => {
+            const authButtons = document.querySelector(".auth-buttons");
+            if (user) {
+                authButtons.innerHTML = `
+                    <button class="auth-button username-button" aria-label="User profile">${user.displayName || "User"}</button>
+                    <button onclick="handleLogOut()" class="auth-button logout-button" aria-label="Log out">Logout</button>
+                `;
+            } else {
+                authButtons.innerHTML = `
+                    <button onclick="window.location.href='login.html'" class="auth-button login-button" aria-label="Navigate to Login">Login</button>
+                    <button onclick="window.location.href='signup.html'" class="auth-button signup-button" aria-label="Navigate to Sign Up">Sign Up</button>
+                `;
+            }
+        });
+
+        // Handle logout
+        function handleLogOut() {
+            auth.signOut().then(() => {
+                window.location.href = "index.html";
+            }).catch((error) => {
+                console.error("Logout error:", error);
+            });
+        }
+    </script>
+</body>
+</html>

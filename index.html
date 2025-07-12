@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Medilife Suggestion</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="disease2.jpg" />
+</head>
+<body>
+  <nav>
+    <div class="nav-buttons">
+      <button onclick="window.location.href='index.html'" class="nav-button">Home</button>
+      <button onclick="window.location.href='about.html'" class="nav-button">About Us</button>
+      <button onclick="window.location.href='services.html'" class="nav-button">Services</button>
+      <button onclick="window.location.href='signup.html'" class="nav-button">SignUp</button>
+      <button onclick="window.location.href='login.html'" class="nav-button">LogIn</button>
+      <button onclick="window.location.href='contact.html'" class="nav-button">Contact Info</button>
+      <button onclick="window.location.href='#medicine-hall'" class="nav-button">Medicine Hall</button>
+    </div>
+  </nav>
+
+  <header>
+    <div class="header-content">
+      <h1>Welcome to Our Website MediLife Suggestion.</h1>
+    </div>
+  </header>
+
+  <section class="disease-grid">
+    <div class="disease-card">
+      <a href="disease1.html">
+        <img src="disease1.jpg" alt="Disease 1" />
+        <h2>Cold Fever</h2>
+      </a>
+    </div>
+    <div class="disease-card">
+      <a href="disease2.html">
+        <img src="disease2.jpg" alt="Disease 2" />
+        <h2>Headache</h2>
+      </a>
+    </div>
+    <div class="disease-card">
+      <a href="disease3.html">
+        <img src="disease3.jpg" alt="Disease 3" />
+        <h2>High blood pressure</h2>
+      </a>
+    </div>
+    <div class="disease-card">
+      <a href="disease4.html">
+        <img src="disease4.jpg" alt="Disease 4" />
+        <h2>Malaria</h2>
+      </a>
+    </div>
+  </section>
+
+  <section id="medicine-hall">
+    <h2>Medicine Hall</h2>
+    <input type="text" id="medicineSearch" placeholder="Search for a medicine..." aria-label="Search medicines">
+    <div id="medicineList" class="medicine-grid"></div>
+    <p class="disclaimer">Disclaimer: Consult a pharmacist or doctor before purchasing medicines.</p>
+  </section>
+
+  <footer>
+    <p>"Prioritize your well-being. Medilife offers a range of services to support your journey to a healthier, happier life."</p>
+    <div class="auth-buttons"></div>
+  </footer>
+
+  <!-- Firebase App + Auth SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
+
+  <script>
+    // Firebase config (replace with your actual config)
+    const firebaseConfig = {
+        apiKey: "AIzaSyC7QzWu2jqCxFtY0-Arrw-yN13hmrHu8LM",
+        authDomain: "medilife-ce9a3.firebaseapp.com",
+        projectId: "medilife-ce9a3",
+        appId: "1:966824331253:web:your_real_app_id"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Handle logout
+    function handleLogOut() {
+      auth.signOut().then(() => {
+        location.reload();
+      }).catch((error) => {
+        console.error("Logout error:", error);
+      });
+    }
+
+    // Monitor user login state
+    auth.onAuthStateChanged((user) => {
+      const authButtons = document.querySelector(".auth-buttons");
+      if (user) {
+        authButtons.innerHTML = `
+          <button class="auth-button username-button" aria-label="User profile">${user.displayName || "User"}</button>
+          <button onclick="handleLogOut()" class="auth-button logout-button" aria-label="Log out">Logout</button>
+        `;
+      } else {
+        authButtons.innerHTML = `
+          <button onclick="window.location.href='login.html'" class="auth-button login-button" aria-label="Navigate to Login">Login</button>
+          <button onclick="window.location.href='signup.html'" class="auth-button signup-button" aria-label="Navigate to Sign Up">Sign Up</button>
+        `;
+      }
+    });
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Medilife Suggestion - Cold Fever</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="disease2.jpg" />
+</head>
+<body>
+    <nav>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='index.html'" class="nav-button">Home</button>
+            <button onclick="window.location.href='about.html'" class="nav-button">About Us</button>
+            <button onclick="window.location.href='services.html'" class="nav-button">Services</button>
+            <button onclick="window.location.href='signup.html'" class="nav-button">SignUp</button>
+            <button onclick="window.location.href='login.html'" class="nav-button">LogIn</button>
+            <button onclick="window.location.href='contact.html'" class="nav-button">Contact Info</button>
+            <button onclick="window.location.href='index.html#medicine-hall'" class="nav-button">Medicine Hall</button>
+        </div>
+    </nav>
+
+    <header>
+        <div class="header-content">
+            <h1>Symptoms and Medicine Suggestions for Cold Fever !</h1>
+        </div>
+    </header>
+
+    <section class="disease-content">
+        <h2>Cold fever details:</h2>
+        <h3>Common Cold Symptoms:</h3>
+        <ul>
+            <li><strong>Nasal Symptoms:</strong> Runny or stuffy nose, sneezing.</li>
+            <li><strong>Throat:</strong> Sore or scratchy throat.</li>
+            <li><strong>Other:</strong> Mild cough, low-grade fever, body aches or mild headache, general feeling of being unwell.</li>
+            <li><strong>Fever:</strong> Fever is usually mild and not as high as with the flu.</li>
+            <li><strong>Duration:</strong> Symptoms usually start 1 to 3 days after exposure and can last for several days to a week or two.</li>
+        </ul>
+        <h3>Medicine for Cold fever:</h3>
+        <ul>
+            <li><strong>Acetaminophen (Tylenol):</strong> Effective for reducing fever and relieving pain, but doesn't target inflammation.</li>
+            <li><strong>Ibuprofen (Advil, Motrin):</strong> A nonsteroidal anti-inflammatory drug (NSAID) that can help relieve fever, aches, and pain, and also reduces inflammation.</li>
+            <li><strong>Aspirin:</strong> Another NSAID that can relieve pain and fever, but it's best to avoid it, especially in children and teens, due to the risk of Reye's syndrome.</li>
+            <li><strong>Naproxen (Aleve):</strong> Another NSAID that can help relieve fever, aches, and pain.</li>
+        </ul>
+        <p>“Feed a cold, starve a fever” is an adage that's been around for centuries. The idea most likely originated during the Middle Ages when people believed there were two kinds of illnesses. The illnesses caused by low temperatures, such as a cold, needed to be fueled, so eating was recommended.</p>
+        <a href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.mayoclinic.org/diseases-conditions/common-cold/diagnosis-treatment/drc-20351611&ved=2ahUKEwiwouOiqKuOAxU48DgGHbGjLwwQFnoECDYQAQ&usg=AOvVaw0B_0F_OcKHzKO5hPG6TMc-" target="_blank" class="advice-button">
+            <span class="heart-icon">❤️</span> Advice from Experts
+        </a>
+    </section>
+
+    <footer>
+        <p>"Prioritize your well-being. Medilife offers a range of services to support your journey to a healthier, happier life."</p>
+        <div class="auth-buttons"></div>
+    </footer>
+
+    <!-- Firebase App + Auth SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
+
+    <script>
+        // Firebase config (replace with your actual config)
+        const firebaseConfig = {
+            apiKey: "AIzaSyC7QzWu2jqCxFtY0-Arrw-yN13hmrHu8LM",
+            authDomain: "medilife-ce9a3.firebaseapp.com",
+            projectId: "medilife-ce9a3",
+            appId: "1:966824331253:web:your_real_app_id"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Handle logout
+        function handleLogOut() {
+            auth.signOut().then(() => {
+                window.location.href = "index.html";
+            }).catch((error) => {
+                console.error("Logout error:", error);
+            });
+        }
+
+        // Monitor user login state
+        auth.onAuthStateChanged((user) => {
+            const authButtons = document.querySelector(".auth-buttons");
+            if (user) {
+                authButtons.innerHTML = `
+                    <button class="auth-button username-button" aria-label="User profile">${user.displayName || "User"}</button>
+                    <button onclick="handleLogOut()" class="auth-button logout-button" aria-label="Log out">Logout</button>
+                `;
+            } else {
+                authButtons.innerHTML = `
+                    <button onclick="window.location.href='login.html'" class="auth-button login-button" aria-label="Navigate to Login">Login</button>
+                    <button onclick="window.location.href='signup.html'" class="auth-button signup-button" aria-label="Navigate to Sign Up">Sign Up</button>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

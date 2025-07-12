@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Medilife Suggestion - High Blood Pressure</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="disease2.jpg" />
+</head>
+<body>
+    <nav>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='index.html'" class="nav-button">Home</button>
+            <button onclick="window.location.href='about.html'" class="nav-button">About Us</button>
+            <button onclick="window.location.href='services.html'" class="nav-button">Services</button>
+            <button onclick="window.location.href='signup.html'" class="nav-button">SignUp</button>
+            <button onclick="window.location.href='login.html'" class="nav-button">LogIn</button>
+            <button onclick="window.location.href='contact.html'" class="nav-button">Contact Info</button>
+            <button onclick="window.location.href='index.html#medicine-hall'" class="nav-button">Medicine Hall</button>
+        </div>
+    </nav>
+
+    <header>
+        <div class="header-content">
+            <h1>High Blood Pressure</h1>
+        </div>
+    </header>
+
+    <section class="disease-content">
+        <p>Disease 3 details: Symptoms include rash and pain. Caused by allergies. Treated with antihistamines.</p>
+        <a href="https://www.webmd.com" target="_blank" class="advice-button">
+            <span class="heart-icon">❤️</span> Advice from Experts
+        </a>
+    </section>
+
+    <footer>
+        <p> Health Info Website</p>
+        <div class="auth-buttons"></div>
+    </footer>
+
+    <!-- Firebase App + Auth SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
+
+    <script>
+        // Firebase config (replace with your actual config)
+        const firebaseConfig = {
+            apiKey: "AIzaSyC7QzWu2jqCxFtY0-Arrw-yN13hmrHu8LM",
+            authDomain: "medilife-ce9a3.firebaseapp.com",
+            projectId: "medilife-ce9a3",
+            appId: "1:966824331253:web:your_real_app_id"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Handle logout
+        function handleLogOut() {
+            auth.signOut().then(() => {
+                window.location.href = "index.html";
+            }).catch((error) => {
+                console.error("Logout error:", error);
+            });
+        }
+
+        // Monitor user login state
+        auth.onAuthStateChanged((user) => {
+            const authButtons = document.querySelector(".auth-buttons");
+            if (user) {
+                authButtons.innerHTML = `
+                    <button class="auth-button username-button" aria-label="User profile">${user.displayName || "User"}</button>
+                    <button onclick="handleLogOut()" class="auth-button logout-button" aria-label="Log out">Logout</button>
+                `;
+            } else {
+                authButtons.innerHTML = `
+                    <button onclick="window.location.href='login.html'" class="auth-button login-button" aria-label="Navigate to Login">Login</button>
+                    <button onclick="window.location.href='signup.html'" class="auth-button signup-button" aria-label="Navigate to Sign Up">Sign Up</button>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
